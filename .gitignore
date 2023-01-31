@@ -1,0 +1,8 @@
+.env
+env
+/.env
+node_modules
+public/images/
+src/public/images
+src/utils/upload
+package-lock.json

@@ -1,0 +1,5296 @@
+
+  {
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "NJC HR-Admin API With Node.js",
+      "description": "HR-Admin Project Application API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:4000",
+    "basePath": "/api/v1.0",
+    "tags": [
+      {
+        "name": "HR-Admin",
+        "description": "API for HR-Admin Application system"
+      }
+    ],
+    "schemes": [
+        "http",
+        "https"
+      ],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "securityDefinitions": {
+        "ApiKeyAuth":{
+          "type": "apiKey",
+          "in": "headers",
+          "name": "authorization"
+        }
+    },
+    "security": [
+      {
+        "ApiKeyAuth": []
+      }
+    ],
+
+
+    "paths": {
+      "/user/create": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "description": "Create new user in the system",
+          "parameters": [
+            {
+              "name": "User",
+              "in": "body",
+              "description": "User that we want to create",
+              "required": "true",
+              "schema": {
+                "required": ["first_name","last_name","gender","phone","email"],
+                "properties": {
+                  "first_name": {
+                    "type":"string"
+                  },
+                  "last_name": {
+                    "type":"string"
+                  },
+                  "other_name": {
+                    "type":"string"
+                  },
+                  "email": {
+                    "type":"string"
+                  },
+                  "phone": {
+                    "type":"string"
+                  },
+                  "gender": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New user is created",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "/user/list": {
+        "get": {
+            "tags": [
+              "Users"
+            ],
+            "summary": "Get all users in the system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            }
+          }
+      },
+      "/user/show/{userId}": {
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of user that we want to find",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a user with a given userId",
+          "tags": [
+            "Users"
+          ],
+          "responses": {
+            "200": {
+              "description": "UserId is returned",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/update/email/{userId}": {
+        "put": {
+          "tags": [
+            "User-Email"
+          ],
+          "description": "update user email only by user id",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of user to be updated",
+              "type":"integer"
+            },
+            {
+              "name": "User Email",
+              "in": "body",
+              "required": true,
+              "description": "User email to be updated",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/User-Email"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Success Message",
+              "schema": {
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/user/update/password/{userId}": {
+        "put": {
+          "tags": [
+            "User-Password"
+          ],
+          "description": "update user password only by user id",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of user to be updated",
+              "type":"integer"
+            },
+            {
+              "name": "User Email",
+              "in": "body",
+              "required": true,
+              "description": "User password to be updated",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/User-Password"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "User password details",
+              "schema": {
+                "$ref": "#/definitions/User-Password"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/update/detail/{userId}": {
+        "put": {
+          "tags": [
+            "User-Details"
+          ],
+          "description": "update user detail by user id",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of user to be updated",
+              "type":"integer"
+            },
+            {
+              "name": "User Details",
+              "in": "body",
+              "required": true,
+              "description": "User detail to be updated",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/User-Details"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "User details",
+              "schema": {
+                "$ref": "#/definitions/User-Details"
+              }
+            }
+          }
+        }
+      },
+
+      "/auth/login": {
+        "post": {
+          "tags": [
+            "Login"
+          ],
+          "description": "Get authenticated into the system",
+          "parameters": [
+            {
+              "name": "Login Details",
+              "in": "body",
+              "description": "Login to your account",
+              "schema": {
+                "$ref": "#/definitions/Login"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "User was authenticated",
+              "schema": {
+                "$ref": "#/definitions/Login-Response"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/new/fileno": {
+        "get": {
+          "tags": [
+            "Staff Profile Documentation"
+          ],
+          "summary": "New Staff File No",
+          "description": "Get New Staff File No for documentation",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff File No"
+            }
+          }
+        }
+      },
+
+      "/user/profile/information/search": {
+        "post": {
+          "tags": [
+            "Staff Profile Documentation"
+          ],
+          "summary": "Search for a profile",
+          "description": "Search for a staff profile by firstname, lastname or filenumber",
+          "parameters": [
+            {
+              "name": "searchKey",
+              "in": "body",
+              "required": true,
+              "description": "Staff's firstname, lastname or filenumber",
+              "type":"string",
+              "schema": {
+                "properties": {
+                  "searchKey": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff profile details",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/profile/information/{userId}": {
+        "put": {
+          "tags": [
+            "Staff Profile Documentation"
+          ],
+          "description": "Staff profile information documentation",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff to be documented",
+              "type":"integer"
+            },
+            {
+              "name": "Profile Information",
+              "in": "body",
+              "required": true,
+              "description": "Profile information to be stored",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/Profile"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff profile details",
+              "schema": {
+                "$ref": "#/definitions/Profile"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/profile/uploads/:userId": {
+        "put": {
+          "tags": [
+            "Staff Profile Documentation"
+          ],
+          "summary": "Upload files during documentation",
+          "description": "Upload Staff Passport and/or Signature",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            },
+            {
+              "name": "Passport and/or Signature",
+              "in": "body",
+              "required": true,
+              "description": "Staff's passport and/or signature file to be stored",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/PassportAndSignature"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Passport Uploaded Successfully",
+              "schema": {
+                "$ref": "#/definitions/UploadResponse"
+              }
+            },
+            "400": {
+              "description": "Invalid user ID provided"
+            }
+          }
+        }
+      },
+
+      "/user/profile/information/show/{userId}": {
+        "get": {
+          "tags": [
+            "Staff Profile Documentation"
+          ],
+          "summary": "Get profile of a user",
+          "description": "Get staff profile information by user id",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff profile details",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/information/all/show/{userId}": {
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Get all the information about a staff",
+          "description": "Get all the information about a staff (profile, spouse, children ...etc) by user id",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff information details",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/profiles/all/show": {
+        "get": {
+          "tags": [
+            "Staff Profile Documentation"
+          ],
+          "summary": "Get all data in the profile table",
+          "description": "Get all the profile information that has been stored",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff profile details",
+              "schema": {
+                "$ref": "#/definitions/UserAll"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/profiles/documented/all/show": {
+        "get": {
+          "tags": [
+            "Staff Profile Documentation"
+          ],
+          "summary": "Get only the documented profiles",
+          "description": "Get only the profile information for documented staff",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff profile details",
+              "schema": {
+                "$ref": "#/definitions/UserAll"
+              }
+            }
+          }
+        }
+      },
+
+      "/user/profile/uploads/get/{userId}": {
+        "get": {
+          "tags": [
+            "Staff Profile Documentation"
+          ],
+          "summary": "Get passport and signature url",
+          "description": "Get the passport and signture URL for a user by providing user id",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Passport and signature details",
+              "schema": {
+                "properties" : {
+                  "signature": {
+                    "type":"string"
+                  },
+                  "passport": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "/user/profile/information/delete/{userId}": {
+        "delete": {
+          "tags": [
+            "Staff Profile Documentation"
+          ],
+          "description": "Delete staff profile information by user id",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff profile was deleted"
+            },
+            "400": {
+              "description": "Invalid ID supplied"
+            }
+          }
+        }
+      },
+
+      "/documentation/spouse/{userId}": {
+        "post": {
+          "tags": [
+            "Spouse Documentation"
+          ],
+          "summary": "Create a spouse for staff",
+          "description": "Store spouse information for staff's documentation",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            },
+            {
+              "name": "Spouse Information",
+              "in": "body",
+              "required": true,
+              "description": "Spouse information to be stored",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/Spouse"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "staff's spouse details",
+              "schema": {
+                "$ref": "#/definitions/Spouse"
+              }
+            }
+          }
+        }
+      },
+
+      "/documentation/spouse/update/{spouseId}": {
+        "put": {
+          "tags": [
+            "Spouse Documentation"
+          ],
+          "summary": "Update a spouse",
+          "description": "Update spouse information for a staff by providing the spouse ID",
+          "parameters": [
+            {
+              "name": "spouseId",
+              "in": "path",
+              "required": true,
+              "description": "ID of spouse",
+              "type":"integer"
+            },
+            {
+              "name": "Spouse information",
+              "in": "body",
+              "required": true,
+              "description": "Spouse information updates",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/Spouse"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff's spouse details was updated",
+              "schema": {
+                "$ref": "#/definitions/Spouse"
+              }
+            },
+            "400": {
+              "description": "Invalid user ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/spouse/show/{userId}": {
+        "get": {
+          "tags": [
+            "Spouse Documentation"
+          ],
+          "summary": "Get a spouse for a staff",
+          "description": "Get the spouse information for a staff by providing the user ID",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff's spouse details",
+              "schema": {
+                "$ref": "#/definitions/Spouse"
+              }
+            },
+            "400": {
+              "description": "Invalid user ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/spouse/{spouseId}": {
+        "get": {
+          "tags": [
+            "Spouse Documentation"
+          ],
+          "summary": "Get a single spouses of a staff",
+          "description": "Get a single spouse information for a staff by providing the spouse ID",
+          "parameters": [
+            {
+              "name": "spouseId",
+              "in": "path",
+              "required": true,
+              "description": "ID of spouse",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's spouse details",
+              "schema": {
+                "$ref": "#/definitions/Spouse"
+              }
+            },
+            "400": {
+              "description": "Invalid spouse ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/spouse/delete/{spouseId}": {
+        "delete": {
+          "tags": [
+            "Spouse Documentation"
+          ],
+          "summary": "Delete a spouse",
+          "description": "Delete spouse information for a staff by providing the spouse ID",
+          "parameters": [
+            {
+              "name": "spouseId",
+              "in": "path",
+              "required": true,
+              "description": "ID of spouse",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's spouse details was deleted"
+            },
+            "400": {
+              "description": "Invalid spouse ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/next-of-kin": {
+        "post": {
+          "tags": [
+            "Next of Kin Documentation"
+          ],
+          "summary": "create new next of kin",
+          "description": "Store next of kin information for staff's documentation",
+          "parameters": [
+            {
+              "name": "Next of Kin Information",
+              "in": "body",
+              "required": true,
+              "description": "Next of Kin's information data to be stored",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/Next-of-Kin2"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's next of kin details",
+              "schema": {
+                "$ref": "#/definitions/Next-of-Kin"
+              }
+            }
+          }
+        }
+      },
+
+      "/documentation/next-of-kin/showAll/{userId}": {
+        "get": {
+          "tags": [
+            "Next of Kin Documentation"
+          ],
+          "summary": "Show all next of kin for a staff",
+          "description": "Get all the next of kin information for a staff by providing the user id",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's next of kin retrieved successfully",
+              "schema": {
+                "$ref": "#/definitions/Next-of-Kin"
+              }
+            },
+            "400": {
+              "description": "Invalid user ID provided"
+            }
+          }
+        }
+      },
+
+      "/user/next-of-kin/{nextOfKinId}": {
+        "get": {
+          "tags": [
+            "Next of Kin Documentation"
+          ],
+          "summary": "Get a single next of kin",
+          "description": "Get the next of kin information for a staff by providing the next of kin id",
+          "parameters": [
+            {
+              "name": "nextOfKinId",
+              "in": "path",
+              "required": true,
+              "description": "Next of kin ID",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's next of kin retrieved successfully",
+              "schema": {
+                "$ref": "#/definitions/Next-of-Kin"
+              }
+            },
+            "400": {
+              "description": "Invalid next of kin ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/next-of-kin/update/{nextOfKinId}": {
+        "put": {
+          "tags": [
+            "Next of Kin Documentation"
+          ],
+          "summary": "Update next of kin",
+          "description": "Update a next of kin information for a staff by providing the next of kin id",
+          "parameters": [
+            {
+              "name": "nextOfKinId",
+              "in": "path",
+              "required": true,
+              "description": "Next of kin ID",
+              "type":"integer"
+            },
+            {
+              "name": "Next of Kin Information",
+              "in": "body",
+              "required": true,
+              "description": "Next of kin updates",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/Next-of-Kin2"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's next of kin updated successfully",
+              "schema": {
+                "$ref": "#/definitions/Next-of-Kin"
+              }
+            },
+            "400": {
+              "description": "Invalid next of kin ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/next-of-kin/passport/update/{nextOfKinId}": {
+        "put": {
+          "tags": [
+            "Next of Kin Documentation"
+          ],
+          "summary": "Update next of kin passport",
+          "description": "Update a next of kin passport for a staff by providing the next of kin id",
+          "parameters": [
+            {
+              "name": "nextOfKinId",
+              "in": "path",
+              "required": true,
+              "description": "Next of kin ID",
+              "type":"integer"
+            },
+            {
+              "name": "Next of Kin Information",
+              "in": "body",
+              "required": true,
+              "description": "Next of kin updates",
+              "type":"string",
+              "schema": {
+                "properties": {
+                  "user_id":{
+                    "type":"integer"
+                  },
+                  "passport":{
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's next of kin passport updated successfully",
+              "schema": {
+                "$ref": "#/definitions/Next-of-Kin"
+              }
+            },
+            "400": {
+              "description": "Invalid next of kin ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/next-of-kin/delete/{nextOfKinId}": {
+        "delete": {
+          "tags": [
+            "Next of Kin Documentation"
+          ],
+          "summary": "Delete a next of kin",
+          "description": "Delete a next of kin information for a staff by providing the next of kin id",
+          "parameters": [
+            {
+              "name": "nextOfKinId",
+              "in": "path",
+              "required": true,
+              "description": "Next of kin ID",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's next of kin deleted successfully"
+            },
+            "400": {
+              "description": "Invalid next of kin ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/children": {
+        "post": {
+          "tags": [
+            "Children Documentation"
+          ],
+          "consumes": "multipart/form-data",
+          "description": "Store a child information for staff's documentation",
+          "parameters": [
+            {
+              "name": "Child Information",
+              "in": "body",
+              "required": true,
+              "description": "staff's child information data to be stored",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/Children2"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's child details",
+              "schema": {
+                "$ref": "#/definitions/Children"
+              }
+            },
+            "400": {
+              "description": "Invalid user ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/children/showAll/{userId}": {
+        "get": {
+          "tags": [
+            "Children Documentation"
+          ],
+          "description": "Get all the children of a staff by passing the user id",
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's children details",
+              "schema": {
+                "$ref": "#/definitions/Children"
+              }
+            }
+          }
+        }
+      },
+
+      "/documentation/children/{childId}": {
+        "get": {
+          "tags": [
+            "Children Documentation"
+          ],
+          "description": "Get the child of a staff by passing the child id",
+          "parameters": [
+            {
+              "name": "childId",
+              "in": "path",
+              "required": true,
+              "description": "ID of child",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's children details",
+              "schema": {
+                "$ref": "#/definitions/Children"
+              }
+            },
+            "400": {
+              "description": "Invalid child ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/children/update/{childId}": {
+        "put": {
+          "tags": [
+            "Children Documentation"
+          ],
+          "summary": "Update a child",
+          "description": "Update a staff's child by passing the child Id",
+          "parameters": [
+            {
+              "name": "childId",
+              "in": "path",
+              "required": true,
+              "description": "ID of child",
+              "type":"integer"
+            },
+            {
+              "name": "Child Information",
+              "in": "body",
+              "required": true,
+              "description": "Child information updates",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/Children"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's child was updated successfully",
+              "schema": {
+                "$ref": "#/definitions/Children"
+              }
+            },
+            "400": {
+              "description": "Invalid childID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/children/delete/{childId}": {
+        "delete": {
+          "tags": [
+            "Children Documentation"
+          ],
+          "description": "Delete a staff's child by passing the child Id",
+          "parameters": [
+            {
+              "name": "childId",
+              "in": "path",
+              "required": true,
+              "description": "ID of child",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff's child was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid childID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/accounts/{userId}": {
+        "post": {
+          "tags": [
+            "Staff Accounts"
+          ],
+          "summary": "Create staff account record",
+          "description": "Store account details for a staff by providing their user id",
+          "parameters": [
+            {
+              "name": "userId ",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            },
+            {
+              "name": "Account Details",
+              "in": "body",
+              "required": true,
+              "description": "Account details to be stored",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/AccountDetails"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Account details stored successfully",
+              "schema": {
+                "$ref": "#/definitions/AccountDetails"
+              }
+            },
+            "400": {
+              "description": "Invalid staffID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/accounts/show/{accountId}": {
+        "get": {
+          "tags": [
+            "Staff Accounts"
+          ],
+          "summary": "Get an account record by ID",
+          "description": "Get account details for a staff by providing the account id",
+          "parameters": [
+            {
+              "name": "accountId ",
+              "in": "path",
+              "required": true,
+              "description": "ID of the account",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Account details retrieved successfully",
+              "schema": {
+                "$ref": "#/definitions/AccountDetails"
+              }
+            },
+            "400": {
+              "description": "Invalid accountID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/accounts/staff/show/{userId}": {
+        "get": {
+          "tags": [
+            "Staff Accounts"
+          ],
+          "summary": "Get an account record by Staff ID",
+          "description": "Get account details for a staff by providing the staff id",
+          "parameters": [
+            {
+              "name": "staffId ",
+              "in": "path",
+              "required": true,
+              "description": "ID of the staff",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Account details retrieved successfully",
+              "schema": {
+                "$ref": "#/definitions/AccountDetails"
+              }
+            },
+            "400": {
+              "description": "Invalid staffID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/accounts/showAll": {
+        "get": {
+          "tags": [
+            "Staff Accounts"
+          ],
+          "summary": "Get all account records",
+          "description": "Get all the stored account details",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Account details retrieved successfully",
+              "schema": {
+                "$ref": "#/definitions/AccountDetails"
+              }
+            },
+            "400": {
+              "description": "Could not retrieve account details"
+            }
+          }
+        }
+      },
+
+      "/documentation/accounts/edit/{accountId}": {
+        "put": {
+          "tags": [
+            "Staff Accounts"
+          ],
+          "summary": "Edit a staff account",
+          "description": "Edit an account details by providing the account id",
+          "parameters": [
+            {
+              "name": "accountId ",
+              "in": "path",
+              "required": true,
+              "description": "ID of the account",
+              "type":"integer"
+            },
+            {
+              "name": "Account Updates",
+              "in": "body",
+              "required": true,
+              "description": "Account updates to be made",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/AccountDetails"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Account details Updated successfully",
+              "schema": {
+                "$ref": "#/definitions/AccountDetails"
+              }
+            },
+            "400": {
+              "description": "Invalid account ID provided"
+            }
+          }
+        }
+      },
+
+      "/documentation/accounts/delete/{accountId}": {
+        "delete": {
+          "tags": [
+            "Staff Accounts"
+          ],
+          "summary": "Delete a staff account",
+          "description": "Delete an account by providing the account id",
+          "parameters": [
+            {
+              "name": "accountId ",
+              "in": "path",
+              "required": true,
+              "description": "ID of the account",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Account deleted successfully"
+            },
+            "400": {
+              "description": "Invalid account ID provided"
+            }
+          }
+        }
+      },
+
+      "/documents/uploads": {
+        "post": {
+          "tags": [
+            "File Upload"
+          ],
+          "summary": "Upload files during emolument",
+          "description": "Upload files for a staff during emoluments by providing the user id",
+          "parameters": [
+            {
+              "name": "userId ",
+              "in": "path",
+              "required": true,
+              "description": "ID of staff",
+              "type":"integer"
+            },
+            {
+              "name": "File",
+              "in": "body",
+              "required": true,
+              "description": "File to be stored",
+              "type":"string",
+              "schema": {
+                "properties": {
+                  "file": {
+                    "type":"string"
+                  },
+                  "description" :  {
+                    "type":"string"
+                  },
+                  "jacket":  {
+                    "type":"integer"
+                  },
+                  "file_type":  {
+                    "type":"integer"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Files were stored successfully",
+              "schema": {
+                "$ref":"#/definitions/UserDocuments"
+              }
+            },
+            "400": {
+              "description": "Invalid staffID provided"
+            }
+          }
+        }
+      },
+
+      "/documents/all/show": {
+        "get": {
+          "tags": [
+            "File Upload"
+          ],
+          "summary": "Get all uploaded files",
+          "description": "Return all the uploaded file documents",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Files were stored successfully",
+              "schema": {
+                "$ref":"#/definitions/UserDocuments"
+              }
+            },
+            "400": {
+              "description": "Could not retrieve documents"
+            }
+          }
+        }
+      },
+
+      "/documents/userdocument/search": {
+        "post": {
+          "tags": [
+            "File Upload"
+          ],
+          "summary": "search staff document",
+          "description": "search staff document by category_id, sub_category_id, volume_id and jacket_id",
+          "parameters": [
+            {
+              "name": "File",
+              "in": "body",
+              "required": true,
+              "description": "File to be stored",
+              "type":"string",
+              "schema": {
+                "properties": {
+                  "jacket_id": {
+                    "type":"integer"
+                  },
+                  "category_id" :  {
+                    "type":"integer"
+                  },
+                  "sub_category_id":  {
+                    "type":"integer"
+                  },
+                  "volume_id":  {
+                    "type":"integer"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "staff document were retrieve successfully",
+              "schema": {
+                "$ref":"#/definitions/UserDocuments"
+              }
+            },
+            "400": {
+              "description": "Invalid category_id, sub_category_id, volume_id or jacket_id provided"
+            }
+          }
+        }
+      },
+      "/documents/userdocument/show/{jacketId}": {
+          "parameters": [
+            {
+              "name": "jacketId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the jacket",
+              "type":"integer"
+            }
+          ],
+          "get": {
+            "summary": "Get all staff document",
+            "description": "Get staff document with a given jacket Id",
+            "tags": [
+              "File Upload"
+            ],
+          "responses": {
+            "200": {
+              "description": "staff document were retrieve successfully",
+              "schema": {
+                "$ref":"#/definitions/UserDocuments"
+              }
+            },
+            "400": {
+              "description": "Invalid jacket_id provided"
+            }
+          }
+        }
+      },
+      "/documents/userdocument/user/show/{userId}": {
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the user",
+              "type":"integer"
+            }
+          ],
+          "get": {
+            "summary": "Get all staff document",
+            "description": "Get staff document with a given user Id",
+            "tags": [
+              "File Upload"
+            ],
+          "responses": {
+            "200": {
+              "description": "staff document were retrieve successfully",
+              "schema": {
+                "$ref":"#/definitions/UserDocuments"
+              }
+            },
+            "400": {
+              "description": "Invalid user_id provided"
+            }
+          }
+        }
+      },
+
+      "/documents/uploads/edit/{documentId}": {
+        "put": {
+          "tags": [
+            "File Upload"
+          ],
+          "summary": "Edit an uploaded file by ID",
+          "description": "Edit uploaded file by providing the document/file ID",
+          "parameters": [
+            {
+              "name": "documentId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the document",
+              "type":"integer"
+            },
+            {
+              "name": "File Updates",
+              "in": "body",
+              "required": true,
+              "description": "Updates to be made",
+              "type":"string",
+              "schema": {
+                "$ref":"#/definitions/UserDocuments2"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Files were stored successfully",
+              "schema": {
+                "$ref":"#/definitions/UserDocuments"
+              }
+            },
+            "400": {
+              "description": "Invalid staffID provided"
+            }
+          }
+        }
+      },
+
+      "/documents/userdocument/delete/{userdocumentId}": {
+        "put": {
+          "tags": [
+            "File Upload"
+          ],
+          "description": "Delete a userdocument by passing the userdocument Id",
+          "parameters": [
+            {
+              "name": "userdocumentId",
+              "in": "path",
+              "required": true,
+              "description": "ID of userdocument Id",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "userdocument was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid userdocument provided"
+            }
+          }
+        }
+      },
+
+      "/volume/create": {
+        "post": {
+          "tags": [
+            "File Volume"
+          ],
+          "description": "Create new file volume in the system",
+          "parameters": [
+            {
+              "name": "Volume",
+              "in": "body",
+              "description": "File Volume that we want to create",
+              "schema": {
+                "$ref": "#/definitions/FileVolume"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New file volume is created",
+              "schema": {
+                "$ref": "#/definitions/FileVolume"
+              }
+            }
+          }
+        }
+      },
+
+      "/volume/list": {
+        "get": {
+            "tags": [
+              "File Volume"
+            ],
+            "summary": "Get all file volume in the system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/FileVolume"
+                }
+              }
+            }
+          }
+      },
+
+      "/volume/show/{volumeId}": {
+        "parameters": [
+          {
+            "name": "volumeId",
+            "in": "path",
+            "required": true,
+            "description": "ID of file volume that we want to find",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a file volume with a given volumeId",
+          "tags": [
+            "File Volume"
+          ],
+          "responses": {
+            "200": {
+              "description": "volumeId is returned",
+              "schema": {
+                "$ref": "#/definitions/FileVolume"
+              }
+            }
+          }
+        }
+      },
+
+      "/volume/edit/{volumeId}": {
+        "put": {
+          "tags": [
+            "File Volume"
+          ],
+          "description": "Edit file volume by providing the volumeId",
+          "parameters": [
+            {
+              "name": "volumeId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the file volume",
+              "type":"integer"
+            },
+            {
+              "name": "file volume Updates",
+              "in": "body",
+              "required": true,
+              "description": "file volume updates to be made",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/FileVolume"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "file volume details Updated successfully",
+              "schema": {
+                "$ref": "#/definitions/FileVolume"
+              }
+              }
+            }
+          }
+        },
+
+      "/volume/delete/{volumeId}": {
+        "delete": {
+          "tags": [
+            "File Volume"
+          ],
+          "description": "Delete a file volume by passing the volume Id",
+          "parameters": [
+            {
+              "name": "volumeId",
+              "in": "path",
+              "required": true,
+              "description": "ID of file volume",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "file volume was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid file volume provided"
+            }
+          }
+        }
+      },
+
+      "/category/create": {
+        "post": {
+          "tags": [
+            "File Category"
+          ],
+          "description": "Create new file category in the system",
+          "parameters": [
+            {
+              "name": "FileCategory",
+              "in": "body",
+              "description": "File Category that we want to create",
+              "schema": {
+                "$ref": "#/definitions/FileCategory"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New file Category is created",
+              "schema": {
+                "$ref": "#/definitions/FileCategory"
+              }
+            }
+          }
+        }
+      },
+
+      "/category/list": {
+        "get": {
+            "tags": [
+              "File Category"
+            ],
+            "summary": "Get all file category in the system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/FileCategory"
+                }
+              }
+            }
+          }
+      },
+
+      "/category/show/{categoryId}": {
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "description": "ID of file Category that we want to find",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a file Category with a given categoryId",
+          "tags": [
+            "File Category"
+          ],
+          "responses": {
+            "200": {
+              "description": "categoryId is returned",
+              "schema": {
+                "$ref": "#/definitions/FileCategory"
+              }
+            }
+          }
+        }
+      },
+
+      "/category/edit/{categoryId}": {
+        "put": {
+          "tags": [
+            "File Category"
+          ],
+          "description": "Edit file category by providing the categoryId",
+          "parameters": [
+            {
+              "name": "categoryId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the file category",
+              "type":"integer"
+            },
+            {
+              "name": "file category Updates",
+              "in": "body",
+              "required": true,
+              "description": "file category updates to be made",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/FileCategory"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "file category details Updated successfully",
+              "schema": {
+                "$ref": "#/definitions/FileCategory"
+              }
+              }
+            }
+          }
+        },
+
+      "/category/delete/{categoryId}": {
+        "delete": {
+          "tags": [
+            "File Category"
+          ],
+          "description": "Delete a file category by passing the category Id",
+          "parameters": [
+            {
+              "name": "categoryId",
+              "in": "path",
+              "required": true,
+              "description": "ID of file category",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "file category was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid file category provided"
+            }
+          }
+        }
+      },
+
+      "/subcategory/create": {
+        "post": {
+          "tags": [
+            "File SubCategory"
+          ],
+          "description": "Create new file subcategory in the system",
+          "parameters": [
+            {
+              "name": "category information",
+              "in": "body",
+              "description": "File SubCategory that we want to create",
+              "schema": {
+                "$ref": "#/definitions/FileSubCategory"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New SubCategory is created",
+              "schema": {
+                "$ref": "#/definitions/FileCategory"
+              }
+            }
+          }
+        }
+      },
+
+      "/subcategory/list": {
+        "get": {
+            "tags": [
+              "File SubCategory"
+            ],
+            "summary": "Get all file subcategory in the system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/FileSubCategory"
+                }
+              }
+            }
+          }
+      },
+      "/subcategory/list/{categoryId}": {
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "description": "ID of file Category that we want to find",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a file SubCategory with a given categoryId",
+          "tags": [
+            "File SubCategory"
+          ],
+          "responses": {
+            "200": {
+              "description": "categoryId is returned",
+              "schema": {
+                "$ref": "#/definitions/FileSubCategory"
+              }
+            }
+          }
+        }
+      },
+
+      "/subcategory/show/{subcategoryId}": {
+        "parameters": [
+          {
+            "name": "subcategoryId",
+            "in": "path",
+            "required": true,
+            "description": "ID of file SubCategory that we want to find",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a file SubCategory with a given categoryId",
+          "tags": [
+            "File SubCategory"
+          ],
+          "responses": {
+            "200": {
+              "description": "subcategoryId is returned",
+              "schema": {
+                "$ref": "#/definitions/FileSubCategory"
+              }
+            }
+          }
+        }
+      },
+
+      "/subcategory/edit/{subcategoryId}": {
+        "put": {
+          "tags": [
+            "File SubCategory"
+          ],
+          "description": "Edit file subcategory by providing the subcategoryId",
+          "parameters": [
+            {
+              "name": "subcategoryId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the file subcategory",
+              "type":"integer"
+            },
+            {
+              "name": "file subcategory Updates",
+              "in": "body",
+              "required": true,
+              "description": "file subcategory updates to be made",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/FileSubCategory"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "file subcategory details Updated successfully",
+              "schema": {
+                "$ref": "#/definitions/FileSubCategory"
+              }
+              }
+            }
+          }
+        },
+
+      "/subcategory/delete/{subcategoryId}": {
+        "delete": {
+          "tags": [
+            "File SubCategory"
+          ],
+          "description": "Delete a file subcategory by passing the subcategory Id",
+          "parameters": [
+            {
+              "name": "subcategoryId",
+              "in": "path",
+              "required": true,
+              "description": "ID of file subcategory",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "file subcategory was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid file subcategory provided"
+            }
+          }
+        }
+      },
+
+      "/department/create": {
+        "post": {
+          "tags": [
+            "Department"
+          ],
+          "description": "Create new department in the system",
+          "parameters": [
+            {
+              "name": "Department",
+              "in": "body",
+              "description": "Department that we want to create",
+              "schema": {
+                "$ref": "#/definitions/Department"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New department is created",
+              "schema": {
+                "$ref": "#/definitions/Department"
+              }
+            }
+          }
+        }
+      },
+
+      "/department/list": {
+        "get": {
+            "tags": [
+              "Department"
+            ],
+            "summary": "Get all department in the system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Department"
+                }
+              }
+            }
+          }
+      },
+
+      "/department/show/{departmentId}": {
+        "parameters": [
+          {
+            "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "description": "ID of department that we want to find",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a department with a given departmentId",
+          "tags": [
+            "Department"
+          ],
+          "responses": {
+            "200": {
+              "description": "departmentId is returned",
+              "schema": {
+                "$ref": "#/definitions/Department"
+              }
+            }
+          }
+        }
+      },
+
+      "/department/edit/{departmentId}": {
+        "put": {
+          "tags": [
+            "Department"
+          ],
+          "summary": "Edit a Title",
+          "description": "Make updates on a department by providing the department id",
+          "parameters":[
+            {
+              "name": "departmentId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the department",
+              "type":"integer",
+              "schema": {
+                "$ref": "#/definitions/Department"
+              }
+            },
+            {
+              "name": "department updates",
+              "in": "body",
+              "required": true,
+              "description": "department updates to be made",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/Department"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "department details",
+              "schema": {
+                "$ref": "#/definitions/Department"
+              }
+            }
+          }
+        }
+      },
+
+      "/department/delete/{departmentId}": {
+        "delete": {
+          "tags": [
+            "Department"
+          ],
+          "description": "Delete a department by passing the category Id",
+          "parameters": [
+            {
+              "name": "departmentId",
+              "in": "path",
+              "required": true,
+              "description": "ID of department",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "department was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid department provided"
+            },
+            "201": {
+              "description": "Jacket details",
+              "schema": {
+                "$ref": "#/definitions/Department"
+              }
+            }
+          }
+        }
+      },
+
+      "/unit/create": {
+        "post": {
+          "tags": [
+            "Unit"
+          ],
+          "summary": "Create a unit",
+          "description": "Create a unit for a department",
+          "parameters": [
+            {
+              "name": "Unit Information",
+              "in": "body",
+              "description": "Information for a unit",
+              "required": "true",
+              "schema": {
+                "required": ["department","name"],
+                "properties":{
+                  "department": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New unit was created",
+              "schema": {
+                "$ref": "#/definitions/Unit"
+              }
+            }
+          }
+        }
+      },
+
+      "/unit/{unitId}": {
+        "parameters": [
+          {
+            "name": "unitId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the unit",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a single unit",
+          "description": "Get a unit by providing the unit ID",
+          "tags": [
+            "Unit"
+          ],
+          "responses": {
+            "200": {
+              "description": "Units was retrieved successfully",
+              "schema": {
+                "$ref": "#/definitions/Unit"
+              }
+            }
+          }
+        }
+      },
+
+      "/unit/all/{departmentId}": {
+        "parameters": [
+          {
+            "name": "departmentId",
+            "in": "path",
+            "required": true,
+            "description": "ID of department whose unit you need",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get units of a department",
+          "description": "Get all the unit for a department",
+          "tags": [
+            "Unit"
+          ],
+          "responses": {
+            "200": {
+              "description": "Units was retrieved successfully",
+              "schema": {
+                "$ref": "#/definitions/Unit"
+              }
+            }
+          }
+        }
+      },
+
+      "/unit/edit/{unitId}": {
+        "put": {
+          "tags": [
+            "Unit"
+          ],
+          "summary": "Edit a unit",
+          "description": "Edit a unit by providing the unit ID",
+          "parameters":[
+            {
+              "name": "unitId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the Unit",
+              "type":"integer"
+            },
+            {
+              "name": "Unit updates",
+              "in": "body",
+              "required": true,
+              "description": "Unit updates to be made",
+              "type":"string",
+              "schema": {
+                "properties":{
+                  "department": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "Unit edited successfully",
+              "schema": {
+                "$ref": "#/definitions/Unit"
+              }
+            }
+          }
+        }
+      },
+
+      "/unit/delete/{unitId}": {
+        "delete": {
+          "tags": [
+            "Unit"
+          ],
+          "summary": "Delete a unit",
+          "description": "Delete a unit by passing the unit Id",
+          "parameters": [
+            {
+              "name": "unitId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the Unit",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Unit was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid unit ID provided"
+            }
+          }
+        }
+      },
+
+      "/jacket/create": {
+        "post": {
+          "tags": [
+            "File Jacket"
+          ],
+          "summary": "Create a jacket",
+          "description": "Store a new file jacket",
+          "parameters": [
+            {
+              "name": "Jacket Information",
+              "in": "body",
+              "required": true,
+              "description": "Jacket information to be stored",
+              "type":"string",
+              "schema": {
+                "properties": {
+                  "user_id":{
+                    "type":"integer"
+                  },
+                  "category_id":{
+                    "type":"integer"
+                  },
+                  "sub_category_id":{
+                    "type":"integer"
+                  },
+                  "volume_id":{
+                    "type":"integer"
+                  },
+                  "description":{
+                    "type":"string"
+                  },
+                  "limit":{
+                    "type":"integer"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Jacket details Updated successfully",
+              "schema": {
+                "$ref": "#/definitions/FileJacket"
+              }
+              }
+            }
+          }
+        },
+
+      "/jacket/showAll": {
+        "get": {
+          "tags": [
+            "File Jacket"
+          ],
+          "summary": "Fetch all jackets",
+          "description": "Return all the file jackets",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Jacket details",
+              "schema": {
+                "$ref": "#/definitions/FileJacket"
+              }
+            }
+          }
+        }
+      },
+
+      "/jacket/show/{jacketId}": {
+        "get": {
+          "tags": [
+            "File Jacket"
+          ],
+          "summary": "Get a jackets",
+          "description": "Return a jacket by providing the jacket id",
+          "parameters":[
+            {
+              "name": "jacketId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the jacket",
+              "type":"integer",
+              "schema": {
+                "$ref": "#/definitions/FileJacket"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Jacket details",
+              "schema": {
+                "$ref": "#/definitions/FileJacket"
+              }
+            }
+          }
+        }
+      },
+
+      "/jacket/user/showAll/{userId}": {
+        "get": {
+          "tags": [
+            "File Jacket"
+          ],
+          "summary": "Get all jackets for a user",
+          "description": "Return jackets for a user by providing the user id",
+          "parameters":[
+            {
+              "name": "userId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the staff",
+              "type":"integer",
+              "schema": {
+                "$ref": "#/definitions/FileJacket"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Jacket details",
+              "schema": {
+                "$ref": "#/definitions/FileJacket"
+              }
+            }
+          }
+        }
+      },
+
+      "/jacket/edit/{jacketId}": {
+        "put": {
+          "tags": [
+            "File Jacket"
+          ],
+          "summary": "Edit a jacket",
+          "description": "Make updates on a jacket by providing the jacket id",
+          "parameters":[
+            {
+              "name": "jacketId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the jacket",
+              "type":"integer",
+              "schema": {
+                "properties": {
+                  "user_id":{
+                    "type":"integer"
+                  },
+                  "category":{
+                    "type":"integer"
+                  },
+                  "sub_category":{
+                    "type":"integer"
+                  },
+                  "volume":{
+                    "type":"integer"
+                  },
+                  "limit":{
+                    "type":"integer"
+                  }
+                }
+              }
+            },
+            {
+              "name": "Jacket updates",
+              "in": "body",
+              "required": true,
+              "description": "Jacket updates to be made",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/FileJacket"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "Jacket details",
+              "schema": {
+                "$ref": "#/definitions/FileJacket"
+              }
+            }
+          }
+        }
+      },
+
+      "/jacket/delete/{jacketId}": {
+        "delete": {
+          "tags": [
+            "File Jacket"
+          ],
+          "parameters": [
+            {
+              "name": "jacketId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the jacket",
+              "type":"integer",
+              "schema": {
+                "$ref": "#/definitions/FileJacket"
+              }
+            }
+          ],
+          "summary": "Delete a jacket",
+          "description": "Delete a jacket by providing the id",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Jacket was deleted successfully"
+            }
+          }
+        }
+      },
+
+      "/title/create": {
+        "post": {
+          "tags": [
+            "Title"
+          ],
+          "description": "Create new title in the system",
+          "parameters": [
+            {
+              "name": "Title",
+              "in": "body",
+              "description": "title that we want to create",
+              "schema": {
+                "$ref": "#/definitions/Title"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New title is created",
+              "schema": {
+                "$ref": "#/definitions/Title"
+              }
+            }
+          }
+        }
+      },
+
+      "/title/list": {
+        "get": {
+            "tags": [
+              "Title"
+            ],
+            "summary": "Get all title in the system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Title"
+                }
+              }
+            }
+          }
+      },
+
+
+
+      "/title/show/{titleId}": {
+        "parameters": [
+          {
+            "name": "titleId",
+            "in": "path",
+            "required": true,
+            "description": "ID of title that we want to find",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a title with a given titleId",
+          "tags": [
+            "Title"
+          ],
+          "responses": {
+            "200": {
+              "description": "titleId is returned",
+              "schema": {
+                "$ref": "#/definitions/Title"
+              }
+            }
+          }
+        }
+      },
+
+      "/title/edit/{titleId}": {
+        "put": {
+          "tags": [
+            "Title"
+          ],
+          "summary": "Edit a Title",
+          "description": "Make updates on a title by providing the title id",
+          "parameters":[
+            {
+              "name": "titleId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the title",
+              "type":"integer",
+              "schema": {
+                "$ref": "#/definitions/Title"
+              }
+            },
+            {
+              "name": "title updates",
+              "in": "body",
+              "required": true,
+              "description": "title updates to be made",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/Title"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "title details",
+              "schema": {
+                "$ref": "#/definitions/Title"
+              }
+            }
+          }
+        }
+      },
+
+      "/title/delete/{titleId}": {
+        "delete": {
+          "tags": [
+            "Title"
+          ],
+          "description": "Delete a title by passing the title Id",
+          "parameters": [
+            {
+              "name": "titleId",
+              "in": "path",
+              "required": true,
+              "description": "ID of title",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "title was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid title provided"
+            },
+            "201": {
+              "description": "Jacket details",
+              "schema": {
+                "$ref": "#/definitions/Title"
+              }
+            }
+          }
+        }
+      },
+
+      "/state/showAll": {
+        "get": {
+          "tags": [
+            "States and LGA"
+          ],
+          "summary": "Get all states",
+          "description": "Get all states and their capitals",
+          "responses": {
+            "200": {
+              "description": "All states returned successfully",
+              "schema": {
+                "$ref": "#/definitions/State"
+              }
+            }
+          }
+        }
+      },
+
+      "/state/get/{stateId}": {
+        "get": {
+          "tags": [
+            "States and LGA"
+          ],
+          "summary": "Get a state",
+          "description": "Get a state and all its LGA",
+          "responses": {
+            "200": {
+              "description": "State and LGA  returned successfully",
+              "schema": {
+                "properties": {
+                  "state": {
+                    "type":"string"
+                  },
+                  "capital": {
+                    "type":"string"
+                  },
+                  "LGA": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "/designation/create": {
+        "post": {
+          "tags": [
+            "Designation"
+          ],
+          "summary": "Create designation",
+          "description": "Create a new designation in the system",
+          "parameters": [
+            {
+              "name": "Name",
+              "in": "body",
+              "description": "Designation name to be used",
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New Designation was created",
+              "schema": {
+                "$ref": "#/definitions/Designation"
+              }
+            }
+          }
+        }
+      },
+
+      "/designation/show/{designationId}": {
+        "parameters": [
+          {
+            "name": "designationId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the designation",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a designation",
+          "description": "Get a designation with a given designation Id",
+          "tags": [
+            "Designation"
+          ],
+          "responses": {
+            "200": {
+              "description": "Designation returned successfully",
+              "schema": {
+                "$ref": "#/definitions/Designation"
+              }
+            },
+            "400": {
+              "description": "Invalid designation ID provided"
+            }
+          }
+        }
+      },
+
+      "/designation/show": {
+        "get": {
+          "summary": "Get all designations",
+          "description": "Get all the available designations",
+          "tags": [
+            "Designation"
+          ],
+          "responses": {
+            "200": {
+              "description": "Designations returned successfully",
+              "schema": {
+                "$ref": "#/definitions/Designation"
+              }
+            }
+          }
+        }
+      },
+
+      "/designation/edit/{designationId}": {
+        "put": {
+          "tags": [
+            "Designation"
+          ],
+          "summary": "Edit a designation",
+          "description": "Make updates on a designation by providing the designation id",
+          "parameters":[
+            {
+              "name": "designationId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the designation",
+              "type":"integer"
+            },
+            {
+              "name": "designation updates",
+              "in": "body",
+              "required": true,
+              "description": "designation updates to be made",
+              "type":"string",
+              "properties": {
+                "name": {
+                  "type":"string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "designation details",
+              "schema": {
+                "$ref": "#/definitions/Designation"
+              }
+            }
+          }
+        }
+      },
+
+      "/designation/delete/{designationId}": {
+        "delete": {
+          "tags": [
+            "Designation"
+          ],
+          "summary": "Delete a designation",
+          "description": "Delete a designation by passing the designation Id",
+          "parameters": [
+            {
+              "name": "designationId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the designation",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Designation was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid designation provided"
+            }
+          }
+        }
+      },
+
+      "/leave-roaster/create": {
+        "post": {
+          "tags": [
+            "Leave Roaster"
+          ],
+          "summary": "Create Leave Roaster",
+          "description": "Create a new leave roaster",
+          "parameters": [
+            {
+              "name": "Data",
+              "in": "body",
+              "description": "Leave roaster information",
+              "schema": {
+                "$ref": "#/definitions/LeaveRoaster2"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New leave roaster was created",
+              "schema": {
+                "$ref": "#/definitions/LeaveRoaster"
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-roaster/all": {
+        "get": {
+          "summary": "Get all leave roasters",
+          "description": "Get all the available leave roasters",
+          "tags": [
+            "Leave Roaster"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave roasters returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveRoaster"
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-roaster/get/{leaveRoasterId}": {
+        "parameters": [
+          {
+            "name": "leaveRoasterId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the leave roaster",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a leave roaster",
+          "description": "Get a leave roaster with a given roaster Id",
+          "tags": [
+            "Leave Roaster"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave roaster returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveRoaster"
+              }
+            },
+            "400": {
+              "description": "Invalid leave roaster ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-roaster/get/{userId}": {
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a user's leave roasters",
+          "description": "Get all leave roasters for a user with the user Id",
+          "tags": [
+            "Leave Roaster"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave roaster returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveRoaster"
+              }
+            },
+            "400": {
+              "description": "Invalid user ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-roaster/edit/{leaveRoasterId}": {
+        "parameters": [
+          {
+            "name": "leaveRoasterId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the leave roaster",
+            "type": "integer"
+          },
+          {
+            "name": "Data",
+            "in": "body",
+            "required": true,
+            "description": "Leave roaster updates",
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/LeaveRoaster2"
+            }
+          }
+        ],
+        "put": {
+          "summary": "Edit a leave roasters",
+          "description": "Edit a leave roasters with the roaster Id",
+          "tags": [
+            "Leave Roaster"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave roaster updated successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveRoaster"
+              }
+            },
+            "400": {
+              "description": "Invalid leave roaster ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-roaster/delete/{leaveRoasterId}": {
+        "delete": {
+          "tags": [
+            "Leave Roaster"
+          ],
+          "summary": "Delete a leave roaster",
+          "description": "Delete a leave roaster by passing the roaster Id",
+          "parameters": [
+            {
+              "name": "leaveRoasterId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the leave roaster",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave roaster was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid leave roaster ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-application/create": {
+        "post": {
+          "tags": [
+            "Leave Application"
+          ],
+          "summary": "Create Leave Application",
+          "description": "Create a new leave application",
+          "parameters": [
+            {
+              "name": "Data",
+              "in": "body",
+              "description": "Leave application information",
+              "schema": {
+                "$ref": "#/definitions/LeaveApplication2"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New leave application was created",
+              "schema": {
+                "$ref": "#/definitions/LeaveApplication"
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-application/remaining/get": {
+        "post": {
+          "tags": [
+            "Leave Application"
+          ],
+          "summary": "Get remaining leave days",
+          "description": "Get the number of remaining leave days for a user",
+          "parameters": [
+            {
+              "name": "Data",
+              "in": "body",
+              "description": "Leave information for user",
+              "schema": {
+                "properties":{
+                  "user_id":{
+                    "type":"integer"
+                  },
+                  "total_allowable_days":{
+                    "type":"integer"
+                  },
+                  "leave_type":{
+                    "type":"integer"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Remaining number of leave days returned",
+              "schema": {
+                "properties":{
+                  "days_remaining":{
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-application/days/used/get": {
+        "post": {
+          "tags": [
+            "Leave Application"
+          ],
+          "summary": "Get number of days used",
+          "description": "Get the number of leave days used for a user",
+          "parameters": [
+            {
+              "name": "Data",
+              "in": "body",
+              "description": "Leave information for user",
+              "schema": {
+                "properties":{
+                  "user_id":{
+                    "type":"integer"
+                  },
+                  "leave_type":{
+                    "type":"integer"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave Days used retrieved successfully",
+              "schema": {
+                "properties":{
+                  "days_used":{
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-application/all": {
+        "get": {
+          "summary": "Get all leave applications",
+          "description": "Get all the available leave applications",
+          "tags": [
+            "Leave Application"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave applications returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveApplication"
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-application/get/{leaveId}": {
+        "parameters": [
+          {
+            "name": "leaveId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the leave application",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a leave application",
+          "description": "Get a leave application with a given application Id",
+          "tags": [
+            "Leave Application"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave application returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveApplication"
+              }
+            },
+            "400": {
+              "description": "Invalid leave application ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-application/all/{userId}": {
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a user's leave applications",
+          "description": "Get all leave application for a user with the user Id",
+          "tags": [
+            "Leave Application"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave applications returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveApplication"
+              }
+            },
+            "400": {
+              "description": "Invalid user ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-application/edit/{leaveId}": {
+        "parameters": [
+          {
+            "name": "leaveId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the leave application",
+            "type": "integer"
+          },
+          {
+            "name": "Data",
+            "in": "body",
+            "required": true,
+            "description": "Leave application updates",
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/LeaveApplication2"
+            }
+          }
+        ],
+        "put": {
+          "summary": "Edit a leave applications",
+          "description": "Edit a leave applications with the application Id",
+          "tags": [
+            "Leave Application"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave application updated successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveApplication"
+              }
+            },
+            "400": {
+              "description": "Invalid leave application ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-application/delete/{leaveId}": {
+        "delete": {
+          "tags": [
+            "Leave Application"
+          ],
+          "summary": "Delete a leave application",
+          "description": "Delete a leave application by passing the application Id",
+          "parameters": [
+            {
+              "name": "leaveId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the leave application",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave application was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid leave application ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-resumption/all": {
+        "get": {
+          "summary": "Get all leave resumption data",
+          "description": "Get all the available leave resumption data",
+          "tags": [
+            "Leave Resumption"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave resumptions returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveResumption"
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-resumption/all/{userId}": {
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a user's leave resumptions data",
+          "description": "Get all leave resumption for a user with the user Id",
+          "tags": [
+            "Leave Resumption"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave resumption returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveResumption"
+              }
+            },
+            "400": {
+              "description": "Invalid user ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-resumption/get/{leaveId}": {
+        "parameters": [
+          {
+            "name": "leaveId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the leave application",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a single leave resumption data",
+          "description": "Get a leave resumption data with a given application Id",
+          "tags": [
+            "Leave Resumption"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave resumption returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveResumption"
+              }
+            },
+            "400": {
+              "description": "Invalid leave ID provided"
+            }
+          }
+        }
+      },
+
+      "/bank/all": {
+        "get": {
+          "summary": "Get all banks",
+          "description": "Get all the available banks",
+          "tags": [
+            "Banks"
+          ],
+          "responses": {
+            "200": {
+              "description": "Banks returned successfully",
+              "schema": {
+                "properties": {
+                  "id": {
+                    "type":"integer"
+                  },
+                  "name": {
+                    "type":"string"
+                  },
+                  "code": {
+                    "type":"string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+      "/bank/get/{bankId}": {
+        "parameters": [
+          {
+            "name": "bankId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the bank",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a bank",
+          "description": "Get a bank using the bank ID",
+          "tags": [
+            "Banks"
+          ],
+          "responses": {
+            "200": {
+              "description": "Bank returned successfully",
+              "schema": {
+                "properties": {
+                  "id": {
+                    "type":"integer"
+                  },
+                  "name": {
+                    "type":"string"
+                  },
+                  "code": {
+                    "type":"string"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid bank ID provided"
+            }
+          }
+        }
+      },
+
+      "/holiday/create": {
+        "post": {
+          "tags": [
+            "Holidays"
+          ],
+          "summary": "Create a holiday",
+          "description": "Create a new holiday",
+          "parameters": [
+            {
+              "name": "Data",
+              "in": "body",
+              "description": "Holiday information",
+              "required": "true",
+              "schema": {
+                "required":["name","date"],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New holiday was created",
+              "schema": {
+                "$ref": "#/definitions/Holiday"
+              }
+            }
+          }
+        }
+      },
+
+      "/holiday/get/{holidayId}": {
+        "parameters": [
+          {
+            "name": "holidayId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the holiday",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a holiday",
+          "description": "Get a holiday with a given holiday Id",
+          "tags": [
+            "Holidays"
+          ],
+          "responses": {
+            "200": {
+              "description": "Holiday returned successfully",
+              "schema": {
+                "$ref": "#/definitions/Holiday"
+              }
+            },
+            "400": {
+              "description": "Invalid holiday ID provided"
+            }
+          }
+        }
+      },
+
+      "/holiday/all": {
+        "get": {
+          "summary": "Get all holidays",
+          "description": "Get all created holidays.",
+          "tags": [
+            "Holidays"
+          ],
+          "responses": {
+            "200": {
+              "description": "Holiday returned successfully",
+              "schema": {
+                "$ref": "#/definitions/Holiday"
+              }
+            },
+            "400": {
+              "description": "No holidays found"
+            }
+          }
+        }
+      },
+
+
+      "/holiday/edit/{holidayId}": {
+        "parameters": [
+          {
+            "name": "holidayId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the holiday",
+            "type": "integer"
+          },
+          {
+            "name": "Holiday Data",
+            "in": "body",
+            "required": true,
+            "description": "Holiday updates",
+            "type": "string",
+            "schema": {
+              "required":["name","date"],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "date": {
+                    "type": "string"
+                  }
+                }
+            }
+          }
+        ],
+        "put": {
+          "summary": "Edit a holiday",
+          "description": "Edit a holiday with the holiday Id",
+          "tags": [
+            "Holidays"
+          ],
+          "responses": {
+            "200": {
+              "description": "Holiday updated successfully",
+              "schema": {
+                "$ref": "#/definitions/Holiday"
+              }
+            },
+            "400": {
+              "description": "Invalid holiday ID provided"
+            }
+          }
+        }
+      },
+
+
+      "/holiday/delete/{holidayId}": {
+        "delete": {
+          "tags": [
+            "Holidays"
+          ],
+          "summary": "Delete a holiday",
+          "description": "Delete a holiday by passing the holiday Id",
+          "parameters": [
+            {
+              "name": "holidayId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the holiday",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "holiday was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid holiday ID provided"
+            }
+          }
+        }
+      },
+
+
+      "/leave-type/create": {
+        "post": {
+          "tags": [
+            "Leave Type"
+          ],
+          "summary": "Create Leave Type",
+          "description": "Create a new leave type",
+          "parameters": [
+            {
+              "name": "Data",
+              "in": "body",
+              "description": "Leave type information",
+              "schema": {
+                "$ref": "#/definitions/LeaveType"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New leave type was created",
+              "schema": {
+                "$ref": "#/definitions/LeaveType"
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-type/all": {
+        "get": {
+          "summary": "Get all leave type",
+          "description": "Get all the leave type",
+          "tags": [
+            "Leave Type"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave type returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveType"
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-type/get/{leaveTypeId}": {
+        "parameters": [
+          {
+            "name": "leaveTypeId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the leave type",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a leave type",
+          "description": "Get a leave type with a given leave type Id",
+          "tags": [
+            "Leave Type"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave type returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveType"
+              }
+            },
+            "400": {
+              "description": "Invalid leave type ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-type/edit/{leaveTypeId}": {
+        "parameters": [
+          {
+            "name": "leaveTypeId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the leave type",
+            "type": "integer"
+          },
+          {
+            "name": "Data",
+            "in": "body",
+            "required": true,
+            "description": "Leave type updates",
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/LeaveType"
+            }
+          }
+        ],
+        "put": {
+          "summary": "Edit a leave type",
+          "description": "Edit a leave type with the type Id",
+          "tags": [
+            "Leave Type"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave type updated successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveType"
+              }
+            },
+            "400": {
+              "description": "Invalid leave type ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-type/delete/{leaveTypeId}": {
+        "delete": {
+          "tags": [
+            "Leave Type"
+          ],
+          "summary": "Delete a leave type",
+          "description": "Delete a leave type by passing the type Id",
+          "parameters": [
+            {
+              "name": "leaveTypeId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the leave type",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave type was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid leave type ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-number-of-day/create": {
+        "post": {
+          "tags": [
+            "Leave Number Of Day"
+          ],
+          "summary": "Create Leave Number Of Day",
+          "description": "Create a new leave type",
+          "parameters": [
+            {
+              "name": "Data",
+              "in": "body",
+              "description": "Leave number of day information",
+              "schema": {
+                "$ref": "#/definitions/LeaveNumberOfDay"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "New leave number of day was created",
+              "schema": {
+                "$ref": "#/definitions/LeaveNumberOfDay"
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-number-of-day/all": {
+        "get": {
+          "summary": "Get all leave number of day",
+          "description": "Get all the leave number of day",
+          "tags": [
+            "Leave Number Of Day"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave number of day returned successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveNumberOfDay"
+              }
+            }
+          }
+        }
+      },
+
+      "/leave-number-of-day/get/{leaveNumberOfDayId}": {
+        "parameters": [
+          {
+            "name": "leaveNumberOfDayId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the leave number of day",
+            "type": "integer"
+          }
+        ],
+        "get": {
+          "summary": "Get a leave type",
+          "description": "Get a leave number of day with a given leave number of day Id",
+          "tags": [
+            "Leave Number Of Day"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave number of day returned successfully",
+              "schema": {
+                "$ref": "#/definitions/leaveNumberOfDayId"
+              }
+            },
+            "400": {
+              "description": "Invalid leave number of day ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-number-of-day/edit/{leaveNumberOfDayId}": {
+        "parameters": [
+          {
+            "name": "leaveNumberOfDayId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the leave number of day",
+            "type": "integer"
+          },
+          {
+            "name": "Data",
+            "in": "body",
+            "required": true,
+            "description": "Leave number of day updates",
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/LeaveNumberOfDay"
+            }
+          }
+        ],
+        "put": {
+          "summary": "Edit a leave number of day",
+          "description": "Edit a leave number of day with the number of day Id",
+          "tags": [
+            "Leave Number Of Day"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave number of day updated successfully",
+              "schema": {
+                "$ref": "#/definitions/LeaveNumberOfDay"
+              }
+            },
+            "400": {
+              "description": "Invalid leave number of day ID provided"
+            }
+          }
+        }
+      },
+
+      "/leave-number-of-day/delete/{leaveNumberOfDayId}": {
+        "delete": {
+          "tags": [
+            "Leave Number Of Day"
+          ],
+          "summary": "Delete a leave number of day",
+          "description": "Delete a leave number of day by passing the number of day Id",
+          "parameters": [
+            {
+              "name": "leaveNumberOfDayId",
+              "in": "path",
+              "required": true,
+              "description": "ID of the leave number of day",
+              "type":"integer"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Leave number of day was deleted successfully"
+            },
+            "400": {
+              "description": "Invalid leave number of day ID provided"
+            }
+          }
+        }
+      },
+
+      "/file/status": {
+        "get": {
+          "tags": [
+            "File Movement"
+          ],
+          "summary": "Get all file operations",
+          "description": "Get all operations to be performed on a file",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all file status",
+              "schema": {
+                "$ref": "#/definitions/FileStatus"
+              }
+            }
+          }
+        }
+      },
+      "/file/jacket/active": {
+        "get": {
+          "tags": [
+            "File Movement"
+          ],
+          "summary": "Get all active file jackets",
+          "description": "Get all active file jacket",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all active file jacket",
+              "schema": {
+                "$ref": "#/definitions/FileJacket"
+              }
+            }
+          }
+        }
+      },
+      "/file/move": {
+        "post": {
+          "tags": [
+            "File Movement"
+          ],
+          "summary": "Move file to another staff/unit",
+          "description": "Move out file to another staff/unit",
+
+          "parameters": [
+            {
+              "name": "Data",
+              "in": "body",
+              "required": true,
+              "description": "Sender, Receiver information, and comment",
+              "type":"string",
+              "schema": {
+                "$ref": "#/definitions/FileMovement"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get receiver's and file details",
+              "schema": {
+                "$ref": "#/definitions/FileMovement"
+              }
+            }
+          }
+        }
+      },
+      "/limit/get": {
+
+        "get": {
+          "summary": "Get all limit",
+          "description": "Get all limit",
+          "tags": [
+            "Limit"
+          ],
+          "responses": {
+            "200": {
+              "description": "limit returned successfully",
+              "schema": {
+                "$ref": "#/definitions/Limit"
+              }
+            },
+            "400": {
+              "description": "No holidays found"
+            }
+          }
+        }
+      }
+
+    },
+
+
+
+
+
+    "definitions": {
+      "User": {
+        "required": [
+            "first_name",
+            "last_name",
+            "email",
+            "password"
+        ],
+        "optional": [
+            "other_name",
+            "role_id",
+            "gender"
+        ],
+        "properties": {
+            "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "other_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "password": {
+            "passwordHash": {
+                "type": "string",
+                "format": "password",
+                "maxLength": 0
+            }
+          },
+          "role_id": {
+            "type": "integer"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "date_of_birth": {
+            "type": "string"
+            },
+           "lga_id": {
+            "type": "integer"
+           },
+            "state_id": {
+                "type": "integer"
+            },
+            "city": {
+                "type": "string"
+            },
+            "marital_status": {
+                "type": "string"
+            },
+            "phone": {
+                "type": "string"
+            },
+            "phone_2": {
+                "type": "string"
+            },
+            "email_2": {
+                "type": "string"
+            },
+            "first_resumption_date": {
+                "type": "string"
+            },
+            "signature_url": {
+                "type": "string"
+            },
+            "profile_photo_url": {
+                "type": "string"
+            },
+            "contact_address": {
+                "type": "string"
+            },
+            "home_address": {
+                "type": "string"
+            },
+            "department_id": {
+                "type": "integer"
+            },
+            "unit_id": {
+                "type": "integer"
+            },
+            "designation_id": {
+              "type": "integer"
+            },
+            "grade": {
+              "type": "string"
+            },
+            "step": {
+              "type": "string"
+            },
+            "title_id": {
+              "type": "integer"
+            },
+            "date_of_appointment": {
+              "type": "string"
+            },
+            "date_of_first_appointment": {
+              "type": "string"
+            },
+            "proposed_annual_leave_date": {
+              "type": "string"
+            },
+            "file_number": {
+                "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "lga": {
+              "type": "string"
+            },
+            "department": {
+              "type": "string"
+            }
+        }
+      },
+
+      "Profile": {
+        "required": [
+            "first_name",
+            "last_name",
+            "email",
+            "password"
+        ],
+        "optional": [
+            "other_name",
+            "role_id",
+            "gender"
+        ],
+        "properties": {
+            "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "other_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "password": {
+            "passwordHash": {
+                "type": "string",
+                "format": "password",
+                "maxLength": 0
+            }
+          },
+          "role_id": {
+            "type": "integer"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "date_of_birth": {
+            "type": "string"
+            },
+           "lga_id": {
+            "type": "integer"
+           },
+            "state_id": {
+                "type": "integer"
+            },
+            "city": {
+                "type": "string"
+            },
+            "marital_status": {
+                "type": "string"
+            },
+            "phone": {
+                "type": "string"
+            },
+            "phone_2": {
+                "type": "string"
+            },
+            "email_2": {
+                "type": "string"
+            },
+            "first_resumption_date": {
+                "type": "string"
+            },
+            "signature_url": {
+                "type": "string"
+            },
+            "profile_photo_url": {
+                "type": "string"
+            },
+            "contact_address": {
+                "type": "string"
+            },
+            "home_address": {
+                "type": "string"
+            },
+            "department_id": {
+                "type": "integer"
+            },
+            "unit_id": {
+                "type": "integer"
+            },
+            "designation_id": {
+              "type": "integer"
+            },
+            "grade": {
+              "type": "string"
+            },
+            "step": {
+              "type": "string"
+            },
+            "title_id": {
+              "type": "integer"
+            },
+            "date_of_appointment": {
+              "type": "string"
+            },
+            "date_of_first_appointment": {
+              "type": "string"
+            },
+            "file_number": {
+                "type": "string"
+            }
+        }
+      },
+
+      "UserAll": {
+        "properties": {
+            "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "other_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "password": {
+            "passwordHash": {
+                "type": "string",
+                "format": "password",
+                "maxLength": 0
+            }
+          },
+          "role_id": {
+            "type": "integer"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "integer"
+          },
+          "date_of_birth": {
+            "type": "string"
+            },
+           "lga_id": {
+            "type": "integer"
+           },
+            "state_id": {
+                "type": "integer"
+            },
+            "city": {
+                "type": "string"
+            },
+            "marital_status": {
+                "type": "string"
+            },
+            "phone": {
+                "type": "string"
+            },
+            "phone_2": {
+                "type": "string"
+            },
+            "email_2": {
+                "type": "string"
+            },
+            "first_resumption_date": {
+                "type": "string "
+            },
+            "signature_url": {
+                "type": "string"
+            },
+            "profile_photo_url": {
+                "type": "string"
+            },
+            "contact_address": {
+                "type": "string"
+            },
+            "home_address": {
+                "type": "string"
+            },
+            "department_id": {
+                "type": "integer"
+            },
+            "unit_id": {
+                "type": "integer"
+            },
+            "designation_id": {
+              "type": "integer"
+            },
+            "grade": {
+              "type": "string"
+            },
+            "step": {
+              "type": "string"
+            },
+            "title_id": {
+              "type": "integer"
+            },
+            "date_of_appointment": {
+              "type": "string"
+            },
+            "date_of_first_appointment": {
+              "type": "string"
+            },
+            "proposed_annual_leave_date": {
+              "type": "string"
+            },
+            "file_number": {
+                "type": "string"
+            },
+            "department": {
+              "type": "string"
+            },
+            "designation": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            }
+        }
+      },
+
+      "Login": {
+          "required": [
+              "email",
+              "password"
+          ],
+          "properties": {
+            "email": {
+              "type": "string",
+              "uniqueItems": true
+            },
+            "password": {
+              "passwordHash": {
+                  "type": "string",
+                  "format": "password",
+                  "maxLength": 0
+              }
+            }
+          }
+      },
+
+      "Login-Response": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "default": false
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+
+      "User-Email": {
+        "required": [
+            "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+    },
+    "User-Password": {
+        "required": [
+            "email",
+            "password"
+        ],
+        "properties": {
+          "password": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "new_password": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "confirm_password": {
+            "type": "string",
+            "uniqueItems": true
+          }
+        }
+    },
+
+    "User-Details": {
+        "required": [
+            "email",
+            "password"
+        ],
+        "properties": {
+        "email": {
+            "type": "string",
+            "uniqueItems": true
+          },
+        "password": {
+            "passwordHash": {
+                "type": "string",
+                "format": "password",
+                "maxLength": 0
+            }
+        },
+        "new_password": {
+            "passwordHash": {
+                "type": "string",
+                "format": "password",
+                "maxLength": 0
+            }
+        },
+        "first_name": {
+          "type":"string"
+        },
+        "last_name": {
+          "type":"string"
+        },
+        "other_name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "suspend": {
+          "type": "string"
+        }
+    }
+    },
+
+      "Spouse" : {
+        "required": [ "first_name", "last_name", "gender" ],
+        "optional": [ "email", "phone" ],
+        "properties":{
+          "first_name":{
+            "type":"string"
+          },
+          "last_name":{
+            "type":"string"
+          },
+          "other_name":{
+            "type":"string"
+          },
+          "gender":{
+            "type":"string"
+          },
+          "phone":{
+            "type":"string"
+          },
+          "home_address":{
+            "type":"string"
+          },
+          "office_address":{
+            "type":"string"
+          },
+          "occupation":{
+            "type":"string"
+          },
+          "email":{
+            "type":"string"
+          },
+          "status":{
+            "type":"integer"
+          },
+          "date_of_birth":{
+            "type":"string"
+          },
+          "city":{
+            "type":"string"
+          },
+          "state_id":{
+            "type":"integer"
+          },
+          "lga_id":{
+            "type":"integer"
+          },
+          "passport":{
+            "type":"string"
+          }
+        }
+      },
+
+      "Next-of-Kin2": {
+        "required": ["user_id","profile_id","first_name","last_name"],
+        "optional": ["gender", "email", "relationship"],
+        "properties":{
+          "user_id": {
+            "type":"integer"
+          },
+          "profile_id": {
+            "type":"integer"
+          },
+          "first_name": {
+            "type":"string"
+          },
+          "last_name": {
+            "type":"string"
+          },
+          "other_name": {
+            "type": "string"
+          },
+          "home_address": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state_id": {
+            "type": "integer"
+          },
+          "lga_id": {
+            "type": "integer"
+          },
+          "date_of_birth": {
+            "type": "string"
+          },
+          "relationship": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
+      },
+
+      "Next-of-Kin": {
+        "required": ["user_id","profile_id","first_name","last_name"],
+        "optional": ["gender", "email", "relationship"],
+        "properties":{
+          "user_id": {
+            "type":"integer"
+          },
+          "profile_id": {
+            "type":"integer"
+          },
+          "first_name": {
+            "type":"string"
+          },
+          "last_name": {
+            "type":"string"
+          },
+          "other_name": {
+            "type": "string"
+          },
+          "home_address": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state_id": {
+            "type": "integer"
+          },
+          "lga_id": {
+            "type": "integer"
+          },
+          "date_of_birth": {
+            "type": "string"
+          },
+          "relationship": {
+            "type": "string"
+          },
+          "photo_url": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          }
+        }
+      },
+
+      "Children": {
+        "required": ["user_id","profile_id","first_name","last_name"],
+        "optional": ["gender", "date_of_birth", "home_addres"],
+        "properties":{
+          "user_id": {
+            "type": "integer"
+          },
+          "profile_id": {
+            "type": "integer"
+          },
+          "spouse_id": {
+            "type": "integer"
+          },
+          "first_name": {
+            "type":"string"
+          },
+          "last_name": {
+            "type":"string"
+          },
+          "other_name": {
+            "type": "string"
+          },
+          "home_address": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state_id": {
+            "type": "integer"
+          },
+          "lga_id": {
+            "type": "integer"
+          },
+          "date_of_birth": {
+            "type": "string"
+          },
+          "child_photo_url": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          }
+        }
+      },
+
+      "Children2": {
+        "required": ["user_id","profile_id","first_name","last_name"],
+        "optional": ["gender", "date_of_birth", "home_addres"],
+        "properties":{
+          "user_id": {
+            "type": "integer"
+          },
+          "profile_id": {
+            "type": "integer"
+          },
+          "spouse_id": {
+            "type": "integer"
+          },
+          "first_name": {
+            "type":"string"
+          },
+          "last_name": {
+            "type":"string"
+          },
+          "other_name": {
+            "type": "string"
+          },
+          "home_address": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state_id": {
+            "type": "integer"
+          },
+          "lga_id": {
+            "type": "integer"
+          },
+          "date_of_birth": {
+            "type": "string"
+          }
+        }
+      },
+
+      "UploadResponse" : {
+        "properties":{
+          "UploadedFileName": { "type" : "string" },
+          "UploadedFilePath": { "type" : "string" },
+          "UploadedFileMime": { "type" : "string" },
+          "UploadedFileSize": { "type" : "integer" },
+          "NumberOFilesUploaded": { "type" : "integer" }
+        }
+      },
+
+      "AccountDetails" : {
+        "properties": {
+          "bank_name" : { "type" : "string" },
+          "bank_account" : { "type" : "string" },
+          "salary_per_annum" : { "type" : "string" },
+          "increment_date" : { "type" : "string" },
+          "secreterial_allowance" : { "type" : "string" },
+          "rent_supplement" : { "type" : "string" },
+          "transport_allowance" : { "type" : "string" },
+          "meal_subsidy" : { "type" : "string" },
+          "utility_allowance" : { "type" : "string" },
+          "entertainment_allowance" : { "type" : "string" }
+        }
+      },
+
+      "UserDocuments" : {
+        "required": ["user_id","profile_id"],
+        "properties" : {
+          "id": {
+            "type": "integer"
+          },
+          "file_name_url" : {
+            "type" : "string"
+          },
+          "file_description" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "integer"
+          },
+          "jacket_id": {
+            "type": "integer"
+          }
+        }
+      },
+
+      "UserDocuments2" : {
+        "required": ["user_id","profile_id"],
+        "properties" : {
+          "file": {
+            "type": "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "jacket": {
+            "type": "integer"
+          },
+          "file_type": {
+            "type": "integer"
+          }
+        }
+      },
+
+      "FileVolume" : {
+        "required": ["name","limit", "status"],
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "limit" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "FileCategory" : {
+        "required": ["name", "status"],
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "FileSubCategory" : {
+        "required": ["name", "category", "status"],
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "category_id" : {
+            "type" : "integer"
+          }
+        }
+      },
+
+      "Department" : {
+        "required": ["name"],
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+
+      "FileJacket" : {
+        "required": ["user_id","category_id","volume_id","sub_category_id"],
+        "properties" : {
+          "user_id" : {
+            "type" : "integer"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "jacket_number" : {
+            "type" : "string"
+          },
+          "category_id" : {
+            "type" : "integer"
+          },
+          "sub_category_id" : {
+            "type" : "integer"
+          },
+          "volume_id" : {
+            "type" : "integer"
+          },
+          "limit" : {
+            "type" : "integer"
+          },
+          "status" : {
+            "type" : "integer"
+          }
+        }
+      },
+
+      "PassportAndSignature" : {
+        "properties" : {
+          "passport" : {
+            "type" : "string"
+          },
+          "signature" : {
+            "type" :"string"
+          }
+        }
+      },
+
+      "Title" : {
+        "required": ["name"],
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+
+      "State" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "state" : {
+            "type" : "string"
+          },
+          "capital" : {
+            "type" : "string"
+          }
+        }
+      },
+
+      "Unit" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "department_id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+
+      "Designation" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+
+      "LeaveRoaster" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "user_id" : {
+            "type" : "integer"
+          },
+          "profile_id" : {
+            "type" : "integer"
+          },
+          "no_of_leave_days" : {
+            "type" : "string"
+          },
+          "start_date" : {
+            "type" : "string"
+          },
+          "end_date" : {
+            "type" : "string"
+          },
+          "leave_address" : {
+            "type" : "string"
+          },
+          "year" : {
+            "type" : "string"
+          },
+          "is_approved" : {
+            "type" : "integer"
+          }
+        }
+      },
+
+      "LeaveRoaster2" : {
+        "properties" : {
+          "user_id" : {
+            "type" : "integer"
+          },
+          "start_date" : {
+            "type" : "string"
+          },
+          "no_of_leave_days" : {
+            "type" : "string"
+          },
+          "leave_address" : {
+            "type" : "string"
+          }
+        }
+      },
+      "LeaveType" : {
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        }
+      },
+      "LeaveNumberOfDay" : {
+        "properties" : {
+          "leave_type_id" : {
+            "type" : "integer"
+          },
+          "grade_level" : {
+            "type" : "integer"
+          },
+          "days_entitled" : {
+            "type" : "string"
+          }
+        }
+      },
+
+      "LeaveApplication" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "user_id" : {
+            "type" : "integer"
+          },
+          "profile_id" : {
+            "type" : "integer"
+          },
+          "leave_type_id" : {
+            "type" : "integer"
+          },
+          "remaining_days" : {
+            "type" : "string"
+          },
+          "days_used" : {
+            "type" : "string"
+          },
+          "no_of_leave_days" : {
+            "type" : "string"
+          },
+          "start_date" : {
+            "type" : "string"
+          },
+          "end_date" : {
+            "type" : "string"
+          },
+          "leave_address" : {
+            "type" : "string"
+          },
+          "approval_stage" : {
+            "type" : "string"
+          },
+          "leave_status" : {
+            "type" : "integer"
+          },
+          "year" : {
+            "type" : "string"
+          }
+        }
+      },
+
+      "LeaveApplication2" : {
+        "properties" : {
+          "user_id" : {
+            "type" : "integer"
+          },
+          "leave_type" : {
+            "type" : "integer"
+          },
+          "remaining_days" : {
+            "type" : "integer"
+          },
+          "days_used" : {
+            "type" : "integer"
+          },
+          "total_allowable_days" : {
+            "type" : "integer"
+          },
+          "no_of_leave_days" : {
+            "type" : "integer"
+          },
+          "start_date" : {
+            "type" : "string"
+          },
+          "leave_address" : {
+            "type" : "string"
+          }
+        }
+      },
+
+      "LeaveResumption" : {
+        "properties":{
+          "id": {
+            "type": "integer"
+          },
+          "no_of_leave_days": {
+            "type": "integer"
+          },
+          "start_date": {
+            "type": "string"
+          },
+          "end_date": {
+            "type": "string"
+          },
+          "leave_status": {
+            "type": "integer"
+          },
+          "resumption_date": {
+            "type": "string"
+          }
+        }
+      },
+
+      "Holiday" : {
+        "required": ["name","date"],
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "date" : {
+            "type" : "string"
+          }
+        }
+      },
+
+      "FileStatus": {
+        "required": [
+            "name",
+            "description",
+            "active"
+        ],
+        "optional":[
+            "unit"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "description": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "active": {
+            "type": "integer",
+            "uniqueItems": false
+          },
+          "unit": {
+            "type": "integer",
+            "uniqueItems": false
+          }
+        }
+    },
+    "FileMovement": {
+      "required": [
+          "sender_id",
+          "receiver_id"
+      ],
+      "optional":[
+        "is_accepted",
+        "comment",
+        "status"
+      ],
+      "properties": {
+        "sender_id": {
+          "type": "integer"
+        },
+        "receiver_id": {
+          "type": "integer"
+        },
+        "is_accepted": {
+          "type": "integer"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer"
+        }
+      }
+  },
+  "Limit" : {
+    "properties" : {
+      "id" : {
+        "type" : "integer"
+      },
+      "department_id" : {
+        "type" : "integer"
+      },
+      "name" : {
+        "type" : "string"
+      }
+    }
+  }
+
+
+
+    }
+  }
+
+
